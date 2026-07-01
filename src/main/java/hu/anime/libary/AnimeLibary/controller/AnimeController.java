@@ -1,4 +1,4 @@
-package hu.anime.libary.AnimeLibary;
+package hu.anime.libary.AnimeLibary.controller;
 
 import hu.anime.libary.AnimeLibary.entity.Anime;
 import hu.anime.libary.AnimeLibary.service.AnimeService;
@@ -13,7 +13,6 @@ import java.util.Optional;
 @RequestMapping("/api/anime")
 public class AnimeController {
 
-    // Konstruktor injektálás: a legjobb gyakorlat
     private final AnimeService animeService;
 
     public AnimeController(AnimeService animeService) {
@@ -36,7 +35,7 @@ public class AnimeController {
 
     @PostMapping("/create")
     public ResponseEntity<Anime> createAnime(@RequestBody Anime newAnime){
-        System.out.println(newAnime.getTitle());
+        System.out.println(newAnime.getAnimeName());
         Anime createAnime = animeService.addAnime(newAnime);
         return new ResponseEntity<>(createAnime, HttpStatus.CREATED);
     }
@@ -47,12 +46,12 @@ public class AnimeController {
         if(updateAnime == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-       return new ResponseEntity<>(updateAnime,HttpStatus.OK);
+        return new ResponseEntity<>(updateAnime,HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete-anime")
-    public ResponseEntity<Void> deleteAnime(@RequestBody Anime anime){
-        animeService.deleteAnime(anime);
-        return ResponseEntity.status(HttpStatus.GONE).build();
+    @DeleteMapping("/delete-anime/{id}")
+    public ResponseEntity<Void> deleteAnime(@PathVariable Long id){
+        animeService.deleteAnime(id);
+        return ResponseEntity.noContent().build();
     }
 }
