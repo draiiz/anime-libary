@@ -46,31 +46,31 @@ public class AnimeControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/anime - Összes anime")
+    @DisplayName("GET /api/anime/getall - Összes anime")
     public void testGetAllAnime() throws Exception {
         when(animeService.getAllAnime()).thenReturn(java.util.List.of(testAnime));
 
-        mockMvc.perform(get("/api/anime"))
+        mockMvc.perform(get("/api/anime/getall"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].animeName").value("Death Note"));
     }
 
     @Test
-    @DisplayName("GET /api/anime/{id} - Anime lekérése")
+    @DisplayName("GET /api/anime/getbyid/{id} - Anime lekérése")
     public void testGetAnimeById() throws Exception {
         when(animeService.getAnimeById(1L)).thenReturn(Optional.of(testAnime));
 
-        mockMvc.perform(get("/api/anime/1"))
+        mockMvc.perform(get("/api/anime/getbyid/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.animeName").value("Death Note"));
     }
 
     @Test
-    @DisplayName("POST /api/anime - Új anime létrehozása")
+    @DisplayName("POST /api/anime/create - Új anime létrehozása")
     public void testCreateAnime() throws Exception {
         when(animeService.addAnime(any(Anime.class))).thenReturn(testAnime);
 
-        mockMvc.perform(post("/api/anime")
+        mockMvc.perform(post("/api/anime/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(testAnime)))
                 .andExpect(status().isCreated())
@@ -78,11 +78,11 @@ public class AnimeControllerTest {
     }
 
     @Test
-    @DisplayName("PUT /api/anime/{id} - Anime frissítése")
+    @DisplayName("PUT /api/anime/updateanime/{id} - Anime frissítése")
     public void testUpdateAnime() throws Exception {
         when(animeService.updateAnime(1L, testAnime)).thenReturn(testAnime);
 
-        mockMvc.perform(put("/api/anime/1")
+        mockMvc.perform(put("/api/anime/updateanime/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(testAnime)))
                 .andExpect(status().isOk())

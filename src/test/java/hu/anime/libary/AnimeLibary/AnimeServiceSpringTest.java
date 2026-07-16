@@ -15,15 +15,15 @@ public class AnimeServiceSpringTest {
     private AnimeService animeService;
 
     @Test
-    public void getStatus_withDataBaseConnection_returnRealStatus(){
+    public void countByStatus_withDataBaseConnection_returnRealCount(){
         //given
-        String stringCase = "Done";
+        String status = "COMPLETED";
 
         //when
-        int result = animeService.getStatus(stringCase);
+        long result = animeService.countByStatus(status);
 
         //than
-        assertEquals(3,result);
+        assertEquals(0, result);
     }
 
 }

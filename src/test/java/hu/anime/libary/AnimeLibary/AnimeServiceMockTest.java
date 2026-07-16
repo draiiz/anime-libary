@@ -25,20 +25,30 @@ public class AnimeServiceMockTest {
     private AnimeRepository animeRepository;
 
     @Test
-    public void getStatus_withMockedSoulution_ReturnBurnedDatas(){
-        String stringCase = "Done";
+    public void countByStatus_withMockedSolution_ReturnCorrectCount(){
+        String status = "COMPLETED";
         List<Anime> animeList = new ArrayList<>();
-        Anime anime = new Anime(1L,"Alma", "Done", "", 37);
-        Anime anime1 = new Anime(2L, "Barack", "Done", "", 897);
+        Anime anime = new Anime();
+        anime.setId(1L);
+        anime.setAnimeName("Alma");
+        anime.setStatus("COMPLETED");
+        anime.setEpisodeNumber(37);
+        anime.setPlotTwist("");
+
+        Anime anime1 = new Anime();
+        anime1.setId(2L);
+        anime1.setAnimeName("Barack");
+        anime1.setStatus("COMPLETED");
+        anime1.setEpisodeNumber(897);
+        anime1.setPlotTwist("");
 
         animeList.add(anime);
         animeList.add(anime1);
 
-        when(animeRepository.findAll()).thenReturn(animeList);
+        when(animeRepository.countByStatus(status)).thenReturn(2L);
 
-        int result = animeService.getStatus(stringCase);
+        long result = animeService.countByStatus(status);
 
-        assertEquals(2,result);
-
+        assertEquals(2L, result);
     }
 }
